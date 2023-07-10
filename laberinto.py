@@ -1,4 +1,7 @@
+from colorama import Fore,Back,Style
+
 class Nodo():
+
     def __init__(self,_estado,_padre):#,_accion):
         self.estado=_estado   #Entendemos por estado (fila,columna)
         self.padre=_padre     
@@ -6,23 +9,32 @@ class Nodo():
                               #que diga que accion se realizo, ejemplo (Arriba,Abajo,Izquierda,Derecha)
                               #No es fundamental para el funcionamiento
 class FronteraStack():
+
     def __init__(self):
+
         self.frontera=[]
+
     def __str__(self):
+
         return "Nodos en la frontera: " + " ".join(
             str(nodo.estado) for nodo in self.frontera)
+    
     def agregar_nodo(self,_nodo):
         #Agregar el nodo pasado por parametro a la frontera
         self.frontera.append(_nodo)
+
     def quitar_nodo(self):
         #Quitar nodo de la frontera (respetar el tipo de frontera)
         return self.frontera.pop()
+    
     def esta_vacia(self):
         #Comprobar si la frontera está vacia o no
         return len(self.frontera)==0
+    
     def contiene_estado(self,_estado):
         #Comprobar si el estado pasado por parametro ya se encuentra en la frontera
         for nodo in self.frontera:
+
             if nodo.estado == _estado:
                 return True
         return False
@@ -34,9 +46,11 @@ class FronteraQueue(FronteraStack):
        se quitan los nodos
     '''
     def quitar_nodo(self):
+
         return self.frontera.pop(0)
 
 class Laberinto():
+
     def  __init__(self,_algoritmo):
         '''Dentro del init podemos ejecutar funciones
            para ir definiendo los atributos de la clase.
@@ -94,6 +108,7 @@ class Laberinto():
             if 0 <= f < self.alto and 0 <= c < self.ancho and not self.paredes[f][c]:
                 vecinos.append((f,c))
         return vecinos
+    
     def resolver(self):
         '''
         Acá tienen que implementar el algoritmo de busqueda
@@ -144,5 +159,15 @@ class Laberinto():
                     nuevo_nodo = Nodo(vecino,nodo_actual)
                     frontera.agregar_nodo(nuevo_nodo)
 
+    def imprimir_laberinto(self):
+        for fila in range(self.alto):
+            for columna in range(self.ancho):
+                if self.paredes[fila][columna]:
+                    print(Back.BLACK + ' ', end='')
+                else:
+                    print(Back.WHITE + ' ', end='')
+            print(Back.RESET)                        
+
 laberinto = Laberinto("BFS")
+laberinto.imprimir_laberinto()
 laberinto.resolver()
