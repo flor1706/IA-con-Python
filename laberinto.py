@@ -165,9 +165,9 @@ class Laberinto():
         for fila in range(self.alto):
             for columna in range(self.ancho):
                 if self.paredes[fila][columna]:
-                    print(Back.BLACK + ' ', end='')
+                    print(Back.BLACK + ' ', end='')#imprime los espacios de pared en negro
                 else:
-                    print(Back.WHITE + ' ', end='')
+                    print(Back.WHITE + ' ', end='')#imprime los espacios vacios en blanco
             print(Back.RESET)                        
 
 laberinto = Laberinto("BFS")
