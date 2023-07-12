@@ -166,10 +166,14 @@ class Laberinto():
             for columna in range(self.ancho):
                 if self.paredes[fila][columna]:
                     print(Back.BLACK + ' ', end='')#imprime los espacios de pared en negro
+                elif (fila,columna) in self.solucion:
+                    print(Fore.GREEN + Back.WHITE + ' ' + Style.RESET_ALL, end='')#resalta el camino en verde sobre blanco    
                 else:
                     print(Back.WHITE + ' ', end='')#imprime los espacios vacios en blanco
             print(Back.RESET)                        
 
 laberinto = Laberinto("BFS")
-laberinto.imprimir_laberinto()
+
 laberinto.resolver()
+
+laberinto.imprimir_laberinto()
