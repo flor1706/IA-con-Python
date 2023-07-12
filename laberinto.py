@@ -167,7 +167,7 @@ class Laberinto():
                 if self.paredes[fila][columna]:
                     print(Back.BLACK + ' ', end='')#imprime los espacios de pared en negro
                 elif (fila,columna) in self.solucion:
-                    print(Fore.GREEN + Back.WHITE + ' ' + Style.RESET_ALL, end='')#resalta el camino en verde sobre blanco    
+                    print(Back.GREEN + ' ' , end='')#resalta el camino en verde    
                 else:
                     print(Back.WHITE + ' ', end='')#imprime los espacios vacios en blanco
             print(Back.RESET)                        
