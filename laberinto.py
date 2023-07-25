@@ -55,17 +55,24 @@ class FronteraQueue(FronteraStack):
 
 class FronteraGreedy(FronteraStack):
     def distancia_manhattan(self, estado1, estado2):
+        #la funcion distancia_manhattan calcula la distancia de Manhattan entre dos estados
+        # es una funcion heuristica utilizada en el algoritmo greedy para evaluar la distancia entre el estado actual y la meta 
         fila1, columna1 = estado1
         fila2, columna2 = estado2
         return abs(fila1 - fila2) + abs(columna1 - columna2)
     
     def agregar_nodo(self, _nodo):
+        #la funcion agregar_nodo agrega el nodo a la frontera greedy
+        # antes de arreglarlo,calcula la priridad del nodo utilizando la heuristica distancia_manhattan
+        #para estimar cuan cerca esta el estado actual de la meta
         if not hasattr(self,'meta'):
             raise ValueError('la meta no ha sido definida en la frontera Greedy')
         _nodo.prioridad = self.distancia_manhattan(_nodo.estado, self.meta)
         self.frontera.append(_nodo)
 
     def quitar_nodo(self):
+        #la funcion se encarga de quitar el nodo con la menor prioridad de la frontera greedy
+        #en este caso la prioridad esta dada por la distancia de manhattan calculada previamente en agragar nodo
         min_prioridad = float('inf')
         min_index = 0
         for i, nodo in enumerate(self.frontera):
@@ -81,6 +88,10 @@ class FronteraAStar(FronteraStack):
         return abs(fila1 - fila2) + abs(columna1 - columna2)
 
     def agregar_nodo(self, _nodo):
+        #la funcion agrega el nodo a la frontera a*
+        #antes de agregarlo calcula la prioridad del nodo utilizando la heuristica distancia_manhattan
+        #y el costo acumulado desde el inicio hasta el estado actual(_nodo.costo_acumulado)
+        #la prioridad se define como la suma del costo acumulado y la distancia de manhattan al estado objetivo(meta)
         if not hasattr(self, 'meta'):
             raise ValueError('La meta no ha sido definida en la frontera A*')
         _nodo.prioridad = _nodo.costo_acumulado + self.distancia_manhattan(_nodo.estado, self.meta)
