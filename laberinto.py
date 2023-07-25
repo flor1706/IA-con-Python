@@ -8,8 +8,8 @@ class Nodo():
         self.estado=_estado   #Entendemos por estado (fila,columna)
         self.padre=_padre     
         #self.accion=_accion   #Accion es simplemente un texto
-                              #que diga que accion se realizo, ejemplo (Arriba,Abajo,Izquierda,Derecha)
-                              #No es fundamental para el funcionamiento
+        #que diga que accion se realizo, ejemplo (Arriba,Abajo,Izquierda,Derecha)
+        #No es fundamental para el funcionamiento
         self.costo_acumulado =_costo_acumulado  
 
 class FronteraStack():
@@ -211,16 +211,23 @@ class Laberinto():
                     frontera.agregar_nodo(nuevo_nodo)
 
     def imprimir_laberinto(self):# INSTALAR COLORAMA EN LAS EXTENSIONES PARA QUE MUESTRE EL LABERINTO EN COLORES
+        costo_total = 0
         for fila in range(self.alto):
             for columna in range(self.ancho):
                 if self.paredes[fila][columna]:
                     print(Back.BLACK + ' ', end='')#imprime los espacios de pared en negro
                 elif (fila,columna) in self.solucion:
                     print(Back.RED + ' ' , end='')#resalta el camino en rojo    
+                    costo_total += 1 #cuenta el numero de nodos explorados
                 else:
                     print(Back.WHITE + ' ', end='')#imprime los espacios vacios en blanco
-            print(Back.RESET)                        
 
+            print(Back.RESET)
+
+        print(f"Nodos Explorados: {len(self.nodos_explorados)}")
+
+        print(f"Costo Total: {costo_total}")    
+                          
        
 
 laberinto = Laberinto('Greedy')
