@@ -226,7 +226,7 @@ class Laberinto():
 
         print(f"Nodos Explorados: {len(self.nodos_explorados)}")
 
-        print(f"Costo Total: {costo_total}")    
+       # print(f"Costo Total: {costo_total}")    
                           
        
 
