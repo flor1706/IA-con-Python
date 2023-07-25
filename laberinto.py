@@ -161,13 +161,15 @@ class Laberinto():
                     nuevo_nodo = Nodo(vecino,nodo_actual)
                     frontera.agregar_nodo(nuevo_nodo)
 
-    def imprimir_laberinto(self):
+    def imprimir_laberinto(self):# INSTALAR COLORAMA EN LAS EXTENSIONES PARA QUE MUESTRE EL LABERINTO EN COLORES
         for fila in range(self.alto):
             for columna in range(self.ancho):
                 if self.paredes[fila][columna]:
-                    print(Back.BLACK + ' ', end='')
+                    print(Back.BLACK + ' ', end='')# imprime los espacios de pared en negro
+                elif (fila,columna) in self.solucion:# resalta el camino en rojo
+                    print(Back.RED + ' ' , end='')    
                 else:
-                    print(Back.WHITE + ' ', end='')
+                    print(Back.WHITE + ' ', end='')# imprime los espacios vacios en blanco
             print(Back.RESET)                        
 
 laberinto = Laberinto("BFS")
