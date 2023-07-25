@@ -4,12 +4,14 @@ init()
 
 class Nodo():
 
-    def __init__(self,_estado,_padre):#,_accion):
+    def __init__(self,_estado,_padre, _costo_acumulado=0):#,_accion):
         self.estado=_estado   #Entendemos por estado (fila,columna)
         self.padre=_padre     
         #self.accion=_accion   #Accion es simplemente un texto
                               #que diga que accion se realizo, ejemplo (Arriba,Abajo,Izquierda,Derecha)
                               #No es fundamental para el funcionamiento
+        self.costo_acumulado =_costo_acumulado  
+
 class FronteraStack():
 
     def __init__(self):
@@ -51,6 +53,39 @@ class FronteraQueue(FronteraStack):
 
         return self.frontera.pop(0)
 
+class FronteraGreedy(FronteraStack):
+    def distancia_manhattan(self, estado1, estado2):
+        fila1, columna1 = estado1
+        fila2, columna2 = estado2
+        return abs(fila1 - fila2) + abs(columna1 - columna2)
+    
+    def agregar_nodo(self, _nodo):
+        if not hasattr(self,'meta'):
+            raise ValueError('la meta no ha sido definida en la frontera Greedy')
+        _nodo.prioridad = self.distancia_manhattan(_nodo.estado, self.meta)
+        self.frontera.append(_nodo)
+
+    def quitar_nodo(self):
+        min_prioridad = float('inf')
+        min_index = 0
+        for i, nodo in enumerate(self.frontera):
+            if nodo.prioridad < min_prioridad:
+                min_prioridad = nodo.prioridad
+                min_index = i
+        return self.frontera.pop(min_index) 
+    
+class FronteraAStar(FronteraStack):
+    def distancia_manhattan(self, estado1, estado2):
+        fila1, columna1 = estado1
+        fila2, columna2 = estado2
+        return abs(fila1 - fila2) + abs(columna1 - columna2)
+
+    def agregar_nodo(self, _nodo):
+        if not hasattr(self, 'meta'):
+            raise ValueError('La meta no ha sido definida en la frontera A*')
+        _nodo.prioridad = _nodo.costo_acumulado + self.distancia_manhattan(_nodo.estado, self.meta)
+        self.frontera.append(_nodo)   
+
 class Laberinto():
 
     def  __init__(self,_algoritmo):
@@ -88,7 +123,8 @@ class Laberinto():
         self.solucion = None
         self.algoritmo = _algoritmo #String en el que pasamos el nombre del algoritmo a utilizar
 
-    def expandir_nodo(self,_nodo):
+
+    def expandir_nodo(self,_nodo, frontera):
         '''Dentro de _nodo.estado tenemos la posicion actual del nodo
            Debemos comprobar en todas las direcciones si podemos movernos
            descartando las que sean paredes o esten fuera del laberinto                            (fila_a - 1, colum_a)
@@ -109,6 +145,13 @@ class Laberinto():
         for f,c in posiciones:
             if 0 <= f < self.alto and 0 <= c < self.ancho and not self.paredes[f][c]:
                 vecinos.append((f,c))
+        
+        for vecino in vecinos:
+            if not frontera.contiene_estado(vecino) and vecino not in self.nodos_explorados:
+                nuevo_costo_acumulado = _nodo.costo_acumulado + 1  #costo acumulado del vecino es 1 mas que el del nodo actual
+                nuevo_nodo = Nodo(vecino, _nodo, nuevo_costo_acumulado)
+                frontera.agregar_nodo(nuevo_nodo)
+
         return vecinos
     
     def resolver(self):
@@ -130,6 +173,12 @@ class Laberinto():
         elif self.algoritmo=='DFS':
             #Crear la frontera que corresponda
             frontera = FronteraStack()
+        elif self.algoritmo == 'Greedy':
+            frontera = FronteraGreedy()
+            frontera.meta = self.meta
+        elif self.algoritmo == 'AStar':
+            frontera =FronteraAStar()
+            frontera.meta = self.meta
         #------------------------------------------------------------------------
         nodo_inicial = Nodo(self.inicio,None)
         frontera.agregar_nodo(nodo_inicial)
@@ -155,7 +204,7 @@ class Laberinto():
                 
             
             self.nodos_explorados.append(nodo_actual.estado)
-            vecinos = self.expandir_nodo(nodo_actual)
+            vecinos = self.expandir_nodo(nodo_actual, frontera)
             for vecino in vecinos:
                 if not frontera.contiene_estado(vecino) and vecino not in self.nodos_explorados:
                     nuevo_nodo = Nodo(vecino,nodo_actual)
@@ -172,7 +221,9 @@ class Laberinto():
                     print(Back.WHITE + ' ', end='')#imprime los espacios vacios en blanco
             print(Back.RESET)                        
 
-laberinto = Laberinto("BFS")
+       
+
+laberinto = Laberinto('AStar')
 
 laberinto.resolver()
 
