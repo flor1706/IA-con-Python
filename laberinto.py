@@ -173,5 +173,8 @@ class Laberinto():
             print(Back.RESET)                        
 
 laberinto = Laberinto("BFS")
-laberinto.imprimir_laberinto()
+
 laberinto.resolver()
+
+laberinto.imprimir_laberinto()
+
