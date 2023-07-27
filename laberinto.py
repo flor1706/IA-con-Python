@@ -241,7 +241,7 @@ class Laberinto():
                           
        
 
-laberinto = Laberinto('DFS')
+laberinto = Laberinto('AStar')
 
 laberinto.resolver()
 
