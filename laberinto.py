@@ -81,7 +81,7 @@ class FronteraGreedy(FronteraStack):
                 min_index = i
         return self.frontera.pop(min_index) 
     
-class FronteraAStar(FronteraStack):
+class FronteraAStar(FronteraGreedy):
     def distancia_manhattan(self, estado1, estado2):
         fila1, columna1 = estado1
         fila2, columna2 = estado2
@@ -226,7 +226,7 @@ class Laberinto():
         for fila in range(self.alto):
             for columna in range(self.ancho):
                 if self.paredes[fila][columna]:
-                    print(Back.BLACK + ' ', end='')#imprime los espacios de pared en negro
+                    print(Back.GREEN + ' ', end='')#imprime los espacios de pared en verde
                 elif (fila,columna) in self.solucion:
                     print(Back.RED + ' ' , end='')#resalta el camino en rojo    
                     costo_total += 1 #cuenta el numero de nodos explorados
@@ -237,11 +237,11 @@ class Laberinto():
 
         print(f"Nodos Explorados: {len(self.nodos_explorados)}")
 
-       # print(f"Costo Total: {costo_total}")    
+        print(f"Costo Total: {costo_total}")    
                           
        
 
-laberinto = Laberinto('Greedy')
+laberinto = Laberinto('DFS')
 
 laberinto.resolver()
 
