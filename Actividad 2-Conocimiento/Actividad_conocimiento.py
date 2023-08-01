@@ -8,6 +8,11 @@ BLadron = Symbol('B es ladron')
 CCaballero = Symbol('C es caballero')
 CLadron = Symbol('C es ladron')
 
+# FUNCIONES AUXILIARES
+
+# Función para verificar si A, B y C son distintos entre sí
+def son_distintos(model):
+    return model[ACaballero] != model[BCaballero] and model[ACaballero] != model[CCaballero] and model[BCaballero] != model[CCaballero]
 
 # ESCENARIO 1
 # Nuevas proposiciones lógicas para lo que A dice en el escenario 1
@@ -105,25 +110,38 @@ else:
 # ESCENARIO 4
 # Nuevas proposiciones lógicas para lo que A, B y C dicen en el escenario 4
 A_caballero_o_ladron = Or(ACaballero, ALadron)  # A dice que es caballero o ladrón (pero no sabemos cuál frase dijo)
-B_dijo_A_ladron = Symbol('B dijo: A es ladron')  # B dice que A dijo "Soy un ladrón"
-B_luego_dijo_C_ladron = Symbol('B luego dijo: C es ladron')  # B luego dice que C es un ladrón
-C_dijo_A_caballero = Symbol('C dijo: A es caballero')  # C dice que A es un caballero
+B_dijo_A_ladron = Or(ACaballero, ALadron)  # B dice que A dijo "Soy un ladrón"
+B_luego_dijo_C_ladron = Or(BCaballero, BLadron)  # B luego dice que C es un ladrón
+C_dijo_A_caballero = Or(ACaballero, ALadron)  # C dice que A es un caballero
 
 # Agregar las nuevas proposiciones lógicas al conjunto de conocimientos del escenario 4
 knowledge4 = And(
-    Or(And(A_caballero_o_ladron, B_dijo_A_ladron), And(A_caballero_o_ladron, Not(B_dijo_A_ladron))),  # Asegurar que lo que dice A es cierto
-    Implication(B_dijo_A_ladron, ALadron),  # Si B dice que A dijo "Soy un ladrón", entonces A es ladrón
-    Implication(B_luego_dijo_C_ladron, CLadron),  # Si B luego dice que C es un ladrón, entonces C es ladrón
-    Implication(C_dijo_A_caballero, ACaballero),  # Si C dice que A es un caballero, entonces A es caballero
-    Not(And(A_caballero_o_ladron, B_dijo_A_ladron)),  # A no puede haber dicho las dos frases a la vez
-    Not(And(A_caballero_o_ladron, Not(B_dijo_A_ladron))),  # A no puede haber dicho las dos frases a la vez
-    Not(And(B_dijo_A_ladron, B_luego_dijo_C_ladron)),  # B no puede haber dicho las dos frases a la vez
-    Not(And(C_dijo_A_caballero, B_luego_dijo_C_ladron)),  # C no puede haber dicho las dos frases a la vez
-    Not(And(A_caballero_o_ladron, C_dijo_A_caballero)),  # A y C no pueden ser iguales
-    Not(And(B_dijo_A_ladron, C_dijo_A_caballero)),  # B y C no pueden ser iguales
-    Not(And(ACaballero, BCaballero)),  # A y B no pueden ser iguales
-    Not(And(ACaballero, CCaballero)),  # A y C no pueden ser iguales
-    Not(And(BCaballero, CCaballero)),  # B y C no pueden ser iguales
+    # Asegurar que lo que dice A es cierto
+    Or(And(A_caballero_o_ladron, B_dijo_A_ladron), And(A_caballero_o_ladron, Not(B_dijo_A_ladron))),
+    # Si B dice que A dijo "Soy un ladrón", entonces A es ladrón
+    Implication(B_dijo_A_ladron, ALadron),
+    # Si B luego dice que C es un ladrón, entonces C es ladrón
+    Implication(B_luego_dijo_C_ladron, CLadron),
+    # Si C dice que A es un caballero, entonces A es caballero
+    Implication(C_dijo_A_caballero, ACaballero),
+    # A no puede haber dicho las dos frases a la vez
+    Not(And(A_caballero_o_ladron, B_dijo_A_ladron)),
+    # A y C no pueden ser iguales
+    Not(And(A_caballero_o_ladron, C_dijo_A_caballero)),
+    # B no puede haber dicho las dos frases a la vez
+    Not(And(B_dijo_A_ladron, B_luego_dijo_C_ladron)),
+    # B y C no pueden ser iguales
+    Not(And(B_dijo_A_ladron, C_dijo_A_caballero)),
+    # C no puede haber dicho las dos frases a la vez
+    Not(And(C_dijo_A_caballero, B_luego_dijo_C_ladron)),
+    # A y B no pueden ser iguales
+    Not(And(ACaballero, BCaballero)),
+    # A y C no pueden ser iguales
+    Not(And(ACaballero, CCaballero)),
+    # B y C no pueden ser iguales
+    Not(And(BCaballero, CCaballero)),
+    # A, B y C no pueden ser los tres caballeros o los tres ladrones
+    son_distintos,
 )
 
 # Ahora, para imprimir quién es ladrón y quién es caballero en el escenario 4:
