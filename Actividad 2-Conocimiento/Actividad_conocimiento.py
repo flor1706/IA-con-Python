@@ -88,9 +88,9 @@ knowledge3 = And(
 # Ahora, para imprimir si lo que dice A y B es verdadero o falso en el escenario 3:
 model = {}
 if model_check(knowledge3, A_mismo_tipo_B_distinto_tipo):
-    print("ESCENARIO 3: A dice la verdad, somos del mismo tipo. B dice la verdad, somos de distintos tipos.")
+    print("ESCENARIO 3: A miente,no somos del mismo tipo. B dice la verdad, somos de distintos tipos.")
 else:
-    print("ESCENARIO 3: A miente, no somos del mismo tipo. B miente, no somos de distintos tipos.")
+    print("ESCENARIO 3: A dice la verdad, somos del mismo tipo. B miente, no somos de distintos tipos.")
 
 # Para imprimir quién es caballero y quién es ladrón en el escenario 3:
 model = {}
@@ -133,13 +133,13 @@ model = {}
 if model_check(knowledge4, ACaballero):
     print("ESCENARIO 4: A es un caballero.")
 else:
-    print("ESCENARIO 4: A es un ladrón.")
+    print("ESCENARIO 4: A es un ladron.")
 
 # Verificar el estado de B (caballero o ladrón)
 if model_check(knowledge4, BCaballero):
     print("ESCENARIO 4: B es un caballero.")
 else:
-    print("ESCENARIO 4: B es un ladrón.")
+    print("ESCENARIO 4: B es un ladron.")
 
 # Verificar el estado de C (caballero o ladrón)
 if model_check(knowledge4, CCaballero):
