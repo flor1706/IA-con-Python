@@ -53,9 +53,9 @@ knowledge2 = And(
 # Ahora, para imprimir si lo que dice A es verdadero o falso en el escenario 2:
 model = {}
 if model_check(knowledge2, A_ambos_ladrones):
-    print("ESCENARIO 2: A dice la verdad, ambos son ladrones.")
-else:
     print("ESCENARIO 2: A miente, no son ambos ladrones.")
+else:
+    print("ESCENARIO 2:A dice la verdad ,ambos son ladrones")
 
  # Para imprimir si B es caballero o ladrón en el escenario 2:
 model = {}
