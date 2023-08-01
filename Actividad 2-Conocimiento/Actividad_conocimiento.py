@@ -116,7 +116,7 @@ knowledge4 = And(
     Implication(B_luego_dijo_C_ladron, CLadron),  # Si B luego dice que C es un ladrón, entonces C es ladrón
     Implication(C_dijo_A_caballero, ACaballero),  # Si C dice que A es un caballero, entonces A es caballero
     Not(And(A_caballero_o_ladron, B_dijo_A_ladron)),  # A no puede haber dicho las dos frases a la vez
-    Not(And(A_caballero_o_ladron, Not(B_dijo_A_ladron))),  # A no puede haber dicho las dos frases a la vez
+    Not(And(A_caballero_o_ladron,Not(B_dijo_A_ladron))),  # A no puede haber dicho las dos frases a la vez
     Not(And(B_dijo_A_ladron, B_luego_dijo_C_ladron)),  # B no puede haber dicho las dos frases a la vez
     Not(And(C_dijo_A_caballero, B_luego_dijo_C_ladron)),  # C no puede haber dicho las dos frases a la vez
     Not(And(A_caballero_o_ladron, C_dijo_A_caballero)),  # A y C no pueden ser iguales
