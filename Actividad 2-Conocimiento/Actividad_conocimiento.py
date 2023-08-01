@@ -8,11 +8,6 @@ BLadron = Symbol('B es ladron')
 CCaballero = Symbol('C es caballero')
 CLadron = Symbol('C es ladron')
 
-# FUNCIONES AUXILIARES
-
-# Función para verificar si A, B y C son distintos entre sí
-def son_distintos(model):
-    return model[ACaballero] != model[BCaballero] and model[ACaballero] != model[CCaballero] and model[BCaballero] != model[CCaballero]
 
 # ESCENARIO 1
 # Nuevas proposiciones lógicas para lo que A dice en el escenario 1
