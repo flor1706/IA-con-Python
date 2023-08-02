@@ -142,7 +142,7 @@ else:
     model['B'] = 'caballero'
 
 # Verificar el estado de C (caballero o ladrón)
-if model_check(knowledge4, ACaballero):
+if model_check(knowledge4, CCaballero):
     model['C'] = 'caballero'
 else:
     model['C'] = 'ladron'
