@@ -37,18 +37,19 @@ knowledge3 = And(
 # ESCENARIO 4
 knowledge4 = And(
     Or(ACaballero, ALadron),  # A dice que es caballero o ladrón (pero no sabemos cuál frase dijo)
-    Or(BCaballero,BLadron),
-    Or(CCaballero,CLadron),
-    Implication(ACaballero,Or(ACaballero, ALadron)),  # B dice que A dijo "Soy un ladrón"
-    Implication(ALadron,Not(Or(ACaballero,ALadron))),
-    Implication(BCaballero,And(ALadron, CLadron)),  # B luego dice que C es ladrón
-    Implication(BLadron,Not(And(ALadron,CLadron))),  # C dice que A es caballero
-    Implication(CCaballero,ACaballero),
-    Implication(CLadron, Not(ACaballero)),
+    Or(BCaballero,BLadron),  # B dice que es caballero o ladrón (pero no sabemos cuál frase dijo)
+    Or(CCaballero,CLadron),  # C dice que es caballero o ladrón (pero no sabemos cuál frase dijo)
+    Implication(ACaballero,Or(ACaballero, ALadron)),  # Si A es caballero, entonces lo que dijo es cierto
+    Implication(ALadron,Not(Or(ACaballero,ALadron))),  # Si A es ladrón, entonces lo que dijo es falso
+    Implication(BCaballero,And(ALadron, CLadron)),  # Si B es caballero, entonces lo que dijo es que A y C son ladrones
+    Implication(BLadron,Not(And(ALadron,CLadron))),  # Si B es ladrón, entonces lo que dijo es falso
+    Implication(CCaballero,ACaballero),  # Si C es caballero, entonces lo que dijo es que A es caballero
+    Implication(CLadron, Not(ACaballero)),  # Si C es ladrón, entonces lo que dijo es falso
     Not(And(ACaballero, ALadron)),  # A no puede haber dicho las dos frases a la vez
     Not(And(BCaballero, BLadron)),  # B no puede haber dicho las dos frases a la vez
-    Not(And(CCaballero,CLadron)),
+    Not(And(CCaballero,CLadron)),  # C no puede haber dicho las dos frases a la vez
 )
+
 
 # Imprimir resultados
 model = {}
