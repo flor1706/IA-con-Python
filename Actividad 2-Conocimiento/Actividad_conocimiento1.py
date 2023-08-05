@@ -55,7 +55,7 @@ knowledge4 = And(
 model = {}
 
 # Escenario 1
-model['A'] = 'A es caballero' if model_check(knowledge1, ACaballero) else ' A es ladron'
+model['A'] = 'A es caballero' if model_check(knowledge1, ACaballero) else 'A es ladron'
 print("ESCENARIO 1:", model['A'])
 
 # Escenario 2
