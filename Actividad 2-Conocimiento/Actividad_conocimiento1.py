@@ -49,6 +49,7 @@ knowledge4 = And(
     Not(And(BCaballero, BLadron)),  # B no puede haber dicho las dos frases a la vez
     Not(And(CCaballero,CLadron)),  # C no puede haber dicho las dos frases a la vez
 )
+#otra forma de plantearlo
 # implicacion(bcaballero,and(implicacion(acaballero,aladron),implicacion(aladron,not(aladron)))),
 #implicacion(bladron,not(and(implicacion(acaballero,aladron),implicacion(aladron,not(aladron))))),
 #implicacion(bcaballero,cladron),
